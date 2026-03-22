@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+/* Theme inline */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ========================= */
+/* BASE */
+/* ========================= */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ========================= */
+/* 🧊 GLASSMORPHISM */
+/* ========================= */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ========================= */
+/* ✨ FADE IN */
+/* ========================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.4s ease forwards;
+}
+
+/* ========================= */
+/* ⚡ GLITCH BASE */
+/* ========================= */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.glitch::before {
+  color: #00fff9;
+  animation: glitchTop 1s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  color: #ff00c8;
+  animation: glitchBottom 1s infinite linear alternate-reverse;
+}
+
+@keyframes glitchTop {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-2px, -2px);
+  }
+
+  40% {
+    transform: translate(2px, 2px);
+  }
+
+  60% {
+    transform: translate(-1px, 1px);
+  }
+
+  80% {
+    transform: translate(1px, -1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes glitchBottom {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(1px, -1px);
+  }
+
+  80% {
+    transform: translate(-1px, 1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ========================= */
+/* 🧠 GLITCH SUAVE (SEM VERMELHO) */
+/* ========================= */
+@keyframes glitchSoft {
+  0% {
+    transform: translate(0);
+  }
+
+  25% {
+    transform: translate(-1px, 1px);
+  }
+
+  50% {
+    transform: translate(1px, -1px);
+  }
+
+  75% {
+    transform: translate(-1px, 0);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.animate-glitch-soft {
+  animation: glitchSoft 2s infinite ease-in-out;
+}
+
+/* ========================= */
+/* 🧠 CYBER TEXT GLOW */
+/* ========================= */
+.cyber-text {
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(0, 255, 255, 0.15),
+    0 0 40px rgba(255, 0, 200, 0.15);
+}
+
+/* ========================= */
+/* 🔴 FLICKER (usado só onde quiser vermelho) */
+/* ========================= */
+@keyframes textFlicker {
+
+  0%,
+  100% {
+    color: #ffffff;
+    text-shadow:
+      0 0 5px rgba(255, 255, 255, 0.2),
+      0 0 10px rgba(255, 0, 0, 0.2);
+  }
+
+  50% {
+    color: #ff2a2a;
+    text-shadow:
+      0 0 8px rgba(255, 0, 0, 0.6),
+      0 0 20px rgba(255, 0, 0, 0.4);
+  }
+}
+
+.animate-flicker {
+  animation: textFlicker 1.5s infinite ease-in-out;
+}
+
+/* ========================= */
+/* ⚡ FLOW ANIMATIONS (MAPA) */
+/* ========================= */
+
+/* horizontal */
+@keyframes flow {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* horizontal reverse */
+@keyframes flowReverse {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* vertical down */
+@keyframes flowDown {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* vertical up */
+@keyframes flowUp {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-flow {
+  animation: flow 1.5s linear infinite;
+}
+
+.animate-flow-reverse {
+  animation: flowReverse 1.5s linear infinite;
+}
+
+.animate-flow-down {
+  animation: flowDown 1.5s linear infinite;
+}
+
+.animate-flow-up {
+  animation: flowUp 1.5s linear infinite;
+}
+
+/* ========================= */
+/* ✨ UI POLISH EXTRA */
+/* ========================= */
+
+/* hover suave nos cards */
+.glass:hover {
+  transform: scale(1.02);
+}
+
+/* barra de drag */
+.handle-bar {
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+}
