@@ -9,12 +9,8 @@ export default function Navbar({ onNavigate }: Props) {
     <div className="fixed top-0 left-0 w-full flex justify-center mt-4 z-50">
       <nav className="glass px-6 py-3 rounded-2xl flex items-center gap-8 shadow-lg">
 
-        {/* 🔥 LOGO AQUI */}
-        {/* 👉 substitua esse span pela sua logo */}
-        <span className="font-semibold text-white">
-          {/* EXEMPLO: */}
-          {/* <img src="/logo.png" className="h-5" /> */}
-           GlassUI
+        <span className="relative w-10 h-6 flex items-center shrink-0">
+          <img src="/logo.png" className="absolute -left-9 h-20 max-w-none" />
         </span>
 
         <div className="flex gap-6 text-sm text-white/80">
@@ -25,7 +21,7 @@ export default function Navbar({ onNavigate }: Props) {
           </button>
 
           <button onClick={() => onNavigate("Canais da Darknet")} className="hover:text-white">
-            Canais da Darknet
+            Canais Ativos
           </button>
 
           <button onClick={() => onNavigate("Frequências Privadas")} className="hover:text-white">

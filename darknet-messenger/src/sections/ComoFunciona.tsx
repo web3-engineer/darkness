@@ -1,135 +1,85 @@
 "use client";
 
-import { useState } from "react";
-
-/* ========================= */
-/* 🧠 FLUXO ORIGINAL (SEU) */
-/* ========================= */
-const nodes = [
-    { id: 0, title: "Você", description: "Você acessa os dados já processados." },
-    { id: 1, title: "Plataforma", description: "Organiza e envia requisições." },
-    { id: 2, title: "Agentes", description: "Descem até a dark web." },
-    { id: 3, title: "Dark Web", description: "Fonte dos dados." },
-    { id: 4, title: "Validação (ZKP)", description: "Validação criptográfica." },
-    { id: 5, title: "Plataforma", description: "Processa e entrega os dados." },
-];
-
-/* ========================= */
-/* 🧪 MOCK DATA */
-/* ========================= */
-const mockTopics = [
-    "cibersegurança",
-    "deep web",
-    "dark web",
-    "criptografia",
-    "anonimato",
-    "agenda 2030",
-    "aliens",
-    "mk ultra",
-    "controle mental",
-    "consciência expandida",
-    "matrix",
-    "tecnologia secreta",
-];
-
 export default function ComoFunciona() {
-    const [active, setActive] = useState<number | null>(null);
-    const [openModal, setOpenModal] = useState(false);
-
     return (
-        <div className="space-y-20">
+        <div className="w-full px-6 md:px-12">
 
-            {/* HEADER */}
-            <div>
-                <h2 className="text-2xl md:text-3xl font-light">
-                    Fluxo Contínuo
-                </h2>
-                <p className="text-white/60">
-                    Um ciclo onde agentes descem à rede e retornam com dados para você.
-                </p>
-            </div>
+            {/* GRID */}
+            <div className="grid md:grid-cols-[1fr_360px] gap-20">
 
-            {/* FLUXO */}
-            <div className="flex flex-col items-center gap-8">
+                {/* ========================= */}
+                {/* 🧠 ESQUERDA */}
+                {/* ========================= */}
+                <div className="space-y-12">
 
-                <div className="flex items-center gap-4">
-                    <Node node={nodes[0]} active={active} setActive={setActive} />
-                    <Arrow>↔</Arrow>
-                    <Node node={nodes[1]} active={active} setActive={setActive} />
-                    <Arrow>↔</Arrow>
-                    <Node node={nodes[2]} active={active} setActive={setActive} />
-                </div>
+                    {/* HEADER */}
+                    <div>
+                        <h2 className="text-2xl md:text-3xl font-light">
+                            Como funciona
+                        </h2>
 
-                <Arrow>↓</Arrow>
-
-                <div className="flex items-center gap-4">
-                    <Node node={nodes[3]} active={active} setActive={setActive} />
-                    <Arrow>↔</Arrow>
-                    <Node node={nodes[4]} active={active} setActive={setActive} />
-                    <Arrow>↔</Arrow>
-                    <Node node={nodes[5]} active={active} setActive={setActive} />
-                </div>
-
-                <Arrow>↑</Arrow>
-            </div>
-
-            {/* DETALHE */}
-            {active !== null && (
-                <div className="glass p-6 rounded-2xl max-w-2xl mx-auto animate-fadeIn">
-                    <h3 className="text-lg mb-2">
-                        {nodes[active].title}
-                    </h3>
-                    <p className="text-white/70 text-sm">
-                        {nodes[active].description}
-                    </p>
-                </div>
-            )}
-
-            {/* PLANOS */}
-            <div className="space-y-10">
-
-                <div>
-                    <h2 className="text-2xl md:text-3xl font-light">
-                        Tipos de Conta
-                    </h2>
-                    <p className="text-white/60">
-                        Escolha seu nível de acesso e personalize seus canais.
-                    </p>
-                </div>
-
-                {/* STATUS */}
-                <div className="flex justify-center">
-                    <div className="glass px-6 py-4 rounded-2xl max-w-xl w-full text-center border border-white/10">
-
-                        <p className="text-sm text-white/50 mb-2 tracking-widest">
-                            ACESSO BLOQUEADO
+                        <p className="text-white/60 mt-2">
+                            Um sistema autônomo que acessa camadas profundas da internet
+                            e entrega informações de forma segura diretamente para você.
                         </p>
+                    </div>
 
-                        <h3 className="text-lg md:text-xl mb-2">
-                            Pagamentos liberados em <span className="text-white">23/03/2026</span>
-                        </h3>
+                    {/* CARDS */}
+                    <div className="space-y-6">
 
-                        <p className="text-white/60 text-sm">
-                            O sistema será ativado em 26/03/2026.
-                            Os agentes já estão em fase de preparação.
-                        </p>
+                        <Block
+                            title="Agentes autônomos de IA"
+                            text1="Agentes operam continuamente na deep e dark web, explorando fóruns e redes privadas."
+                            text2="Eles buscam exatamente os temas que você escolhe."
+                        />
+
+                        <Block
+                            title="Coleta e análise"
+                            text1="Os agentes percorrem discussões e arquivos ocultos em tempo real."
+                            text2="Apenas sinais relevantes são priorizados."
+                        />
+
+                        <Block
+                            title="Criptografia avançada"
+                            text1="Todos os dados passam por um sistema de criptografia."
+                            text2="O conteúdo é transformado em acessos seguros."
+                        />
+
+                        <Block
+                            title="Entrega direta"
+                            text1="Os agentes retornam à superfície."
+                            text2="Você recebe tudo via Instagram, WhatsApp ou Telegram."
+                        />
+
+                        <Block
+                            title="Segurança total"
+                            text1="Você não se expõe nem acessa ambientes perigosos."
+                            text2="Os agentes assumem todo o risco."
+                            border
+                        />
 
                     </div>
+
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-6">
+                {/* ========================= */}
+                {/* 💳 DIREITA */}
+                {/* ========================= */}
+                <div className="pt-[72px] space-y-6">
 
-                    <Card
+                    {/* 🔥 ESSA LINHA É A CHAVE */}
+                    {/* empurra os planos pra alinhar com os cards */}
+
+                    <PlanCard
                         title="DarkNet Lite"
                         price="$33,00"
                         features={[
                             "3 canais personalizados",
                             "Membros do YouTube",
                         ]}
-                        onClick={() => setOpenModal(true)}
                     />
 
-                    <Card
+                    <PlanCard
                         title="DarkNet Premium"
                         price="$77,00"
                         highlight
@@ -137,10 +87,9 @@ export default function ComoFunciona() {
                             "7 canais personalizados",
                             "Membros do YouTube",
                         ]}
-                        onClick={() => setOpenModal(true)}
                     />
 
-                    <Card
+                    <PlanCard
                         title="DarkNet Pro"
                         price="$333,00"
                         features={[
@@ -149,144 +98,72 @@ export default function ComoFunciona() {
                             "Documentários exclusivos",
                             "Cursos de cibersegurança",
                         ]}
-                        onClick={() => setOpenModal(true)}
                     />
 
                 </div>
+
             </div>
-
-            {/* MODAL */}
-            {openModal && <Modal onClose={() => setOpenModal(false)} />}
-
         </div>
     );
 }
 
-/* COMPONENTES */
+/* ========================= */
+/* BLOCO TEXTO */
+/* ========================= */
 
-function Node({ node, active, setActive }: any) {
+function Block({ title, text1, text2, border }: any) {
     return (
         <div
-            onClick={() => setActive(node.id)}
             className={`
-                glass px-4 py-3 rounded-2xl min-w-[150px] text-center
-                cursor-pointer transition-all duration-300
-                ${active === node.id ? "scale-105" : "opacity-80"}
+                glass p-6 rounded-2xl space-y-3
+                ${border ? "border border-white/10" : ""}
             `}
         >
-            <span className="text-sm">{node.title}</span>
+            <h3 className="text-lg">{title}</h3>
+
+            <p className="text-white/70 text-sm leading-relaxed">
+                {text1}
+            </p>
+
+            <p className="text-white/60 text-sm leading-relaxed">
+                {text2}
+            </p>
         </div>
     );
 }
 
-function Arrow({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="text-white/30 text-xl select-none">
-            {children}
-        </div>
-    );
-}
+/* ========================= */
+/* 💳 CARD DE PLANO */
+/* ========================= */
 
-function Card({ title, price, features, highlight, onClick }: any) {
+function PlanCard({ title, price, features, highlight }: any) {
     return (
         <div
             className={`
-                glass p-6 rounded-3xl flex flex-col justify-between min-h-[320px]
-                transition-all duration-300 cursor-pointer
-                ${highlight ? "scale-105 border-white/20" : "opacity-90"}
+                glass p-5 rounded-3xl flex flex-col justify-between
+                w-[300px] h-[300px]
+                transition-all duration-300
+                ${highlight ? "scale-[1.05] border-white/20" : "opacity-90"}
             `}
-            onClick={onClick}
         >
             <div>
-                <h3 className="text-xl mb-2">{title}</h3>
-                <p className="text-2xl mb-4">{price}</p>
+                <h3 className="text-lg mb-1">{title}</h3>
+                <p className="text-xl mb-3">{price}</p>
 
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-xs text-white/70 space-y-1">
                     {features.map((f: string, i: number) => (
                         <li key={i}>• {f}</li>
                     ))}
                 </ul>
             </div>
 
-            <button
-                className="
-                    mt-6 glass px-4 py-2 rounded-xl text-sm
-                    flex items-center justify-center gap-2
-                    opacity-60 cursor-not-allowed
-                "
-            >
-                🔒 Bloqueado
+            <button className="mt-4 glass px-3 py-2 rounded-xl text-xs hover:scale-[1.02] transition">
+                Assinar
             </button>
-        </div>
-    );
-}
 
-function Modal({ onClose }: any) {
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState<string[]>([]);
-
-    const handleSearch = (value: string) => {
-        setQuery(value);
-
-        if (!value) {
-            setResults([]);
-            return;
-        }
-
-        const filtered = mockTopics.filter((item) =>
-            item.toLowerCase().includes(value.toLowerCase())
-        );
-
-        setResults(filtered);
-    };
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-
-            <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={onClose}
-            />
-
-            <div className="relative glass p-6 rounded-2xl w-[90%] max-w-md border border-blue-500/40">
-
-                <h3 className="text-lg mb-4">
-                    Escolha seus canais
-                </h3>
-
-                <input
-                    value={query}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    placeholder="Digite temas ou canais..."
-                    className="w-full px-4 py-2 rounded-xl bg-transparent border border-blue-500/50 outline-none text-white"
-                />
-
-                <div className="mt-3 space-y-2 max-h-40 overflow-y-auto">
-                    {results.map((item, i) => (
-                        <div
-                            key={i}
-                            onClick={() => {
-                                setQuery(item);
-                                setResults([]);
-                            }}
-                            className="glass px-3 py-2 rounded-lg text-sm cursor-pointer hover:scale-[1.02]"
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
-
-                <p className="text-xs text-white/40 mt-2">
-                    Sugestões simuladas (modo offline).
-                </p>
-
-                <button
-                    onClick={onClose}
-                    className="mt-4 text-sm text-white/70 hover:text-white"
-                >
-                    Fechar
-                </button>
-            </div>
+            <p className="text-[10px] text-white/40 mt-2 leading-relaxed">
+                Primeira ativação em até 72h após a criptografia inicial do agente.
+            </p>
         </div>
     );
 }
