@@ -6,9 +6,57 @@ datasource db {
   provider = "mongodb"
 }
 
+// ==========================================
+// 👤 MODELO DO ASSINANTE (CLIENTE)
+// ==========================================
+model User {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  email         String   @unique
+  phone         String?  // Fundamental para a entrega via WhatsApp
+  alias         String?  // Um "nome de código" para manter a estética anónima
+  
+  // Controle de Pagamento e Nível
+  plan          PlanType @default(LITE)
+  status        Status   @default(PENDING)
+  
+  // Relação: Os temas que este utilizador escolheu monitorizar
+  topicIds      String[] @db.ObjectId
+  topics        Topic[]  @relation(fields: [topicIds], references: [id])
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ==========================================
+// 🗄️ MODELO DO BANCO DE DADOS (TEMAS)
+// ==========================================
 model Topic {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String   @unique
-  category  String
-  createdAt DateTime @default(now())
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  themeId         String   @unique // O ID da nossa API (ex: thm_001)
+  title           String
+  description     String
+  category        String
+  minPlan         PlanType @default(LITE)
+  updateFrequency String   @default("weekly")
+  
+  // Relação inversa: Quais utilizadores estão a monitorizar este tema
+  userIds         String[] @db.ObjectId
+  users           User[]   @relation(fields: [userIds], references: [id])
+
+  createdAt       DateTime @default(now())
+}
+
+// ==========================================
+// ⚙️ ENUMS (Opções Fixas)
+// ==========================================
+enum PlanType {
+  LITE
+  PREMIUM
+  PRO
+}
+
+enum Status {
+  PENDING   // Aguardando Pagamento
+  ACTIVE    // Pagamento Confirmado / Agentes Ativos
+  CANCELLED // Assinatura Cancelada
 }

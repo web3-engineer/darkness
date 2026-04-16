@@ -8,7 +8,6 @@ interface Theme {
     title: string;
     description: string;
     category: string;
-    updateFrequency: string;
     minPlan: "lite" | "premium" | "pro";
 }
 
@@ -18,31 +17,28 @@ export default function LitePage() {
     const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Busca os temas da API ao carregar a página
     useEffect(() => {
         const fetchThemes = async () => {
             try {
                 const res = await fetch('/api/themes');
                 const data = await res.json();
-
                 if (data.status === "success") {
                     setThemes(data.themes);
                     setCategories(data.categories);
                 }
             } catch (error) {
-                console.error("Erro ao carregar banco de dados:", error);
+                console.error("Erro ao carregar:", error);
             } finally {
                 setLoading(false);
             }
         };
-
         fetchThemes();
     }, []);
 
     const toggleTheme = (themeId: string, minPlan: string) => {
-        // Impede a seleção se o tema for de um plano superior
+        // Bloqueia a seleção se o tema for de um plano superior
         if (minPlan !== "lite") return;
-
+        
         if (selectedThemes.includes(themeId)) {
             setSelectedThemes(selectedThemes.filter(id => id !== themeId));
         } else if (selectedThemes.length < 3) {
@@ -52,153 +48,152 @@ export default function LitePage() {
 
     return (
         <main className="min-h-screen pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
-
-            {/* TÍTULO DA PÁGINA */}
-            <div className="mb-16 reveal-on-scroll">
-                <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-4">
-                    Plano <span className="text-blue-400">Lite</span>
+            
+            {/* HEADER COM FOCO NO PRODUTO */}
+            <div className="mb-20 reveal-on-scroll">
+                <span className="text-blue-400 font-mono text-xs tracking-[0.3em] uppercase mb-4 block">Configuração de Agentes</span>
+                <h1 className="text-5xl md:text-7xl font-light tracking-tighter mb-6">
+                    Plano <span className="text-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">Lite</span>
                 </h1>
-                <p className="text-white/50 max-w-2xl text-lg">
-                    A porta de entrada para o conhecimento oculto. Escolha os seus 3 sinais diários.
+                <p className="text-white/70 max-w-2xl text-lg font-light leading-relaxed">
+                    Selecione as frequências que os nossos agentes devem monitorar. 
+                    O conhecimento oculto agora é processado e entregue com precisão.
                 </p>
             </div>
 
-            <div className="grid lg:grid-cols-[1fr_400px] gap-12">
+            <div className="grid lg:grid-cols-[1fr_380px] gap-16">
 
                 {/* ========================= */}
-                {/* 🧩 SELEÇÃO DE TEMAS (UPSELL) */}
+                {/* 🧩 GRID DE PRODUTOS (TEMAS) */}
                 {/* ========================= */}
-                <section className="space-y-8 reveal-on-scroll">
-                    <div className="glass p-6 md:p-8 rounded-[2.5rem] border border-white/5">
-                        <div className="flex flex-col md:flex-row justify-between md:items-end mb-8 gap-4 border-b border-white/10 pb-6">
-                            <div>
-                                <h2 className="text-xl font-medium mb-1">Base de Dados</h2>
-                                <p className="text-xs text-white/40">
-                                    Temas com 🔒 requerem upgrade de plano.
-                                </p>
-                            </div>
-                            <span className="text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1.5 rounded-full">
-                                {selectedThemes.length} / 3 SELECIONADOS
-                            </span>
+                <section className="space-y-16">
+                    {loading ? (
+                        <div className="flex flex-col items-center justify-center py-20 text-blue-400 font-mono animate-pulse">
+                            [ SISTEMA INICIALIZANDO... ]
                         </div>
+                    ) : (
+                        categories.map((category) => (
+                            <div key={category} className="space-y-6 reveal-on-scroll">
+                                <h3 className="text-sm font-bold tracking-[0.2em] text-white/30 uppercase border-l-2 border-blue-500 pl-4">
+                                    {category}
+                                </h3>
+                                
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {themes.filter(t => t.category === category).map((theme) => {
+                                        const isLocked = theme.minPlan !== "lite";
+                                        const isSelected = selectedThemes.includes(theme.id);
+                                        const isPremium = theme.minPlan === "premium";
+                                        const isPro = theme.minPlan === "pro";
+                                        
+                                        // Definindo os estilos baseados no estado (ativo, livre ou bloqueado)
+                                        let cardStyles = "group relative p-5 rounded-2xl border transition-all duration-500 cursor-pointer overflow-hidden shadow-lg ";
+                                        
+                                        if (isSelected) {
+                                            cardStyles += "bg-blue-600/20 border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.3)] scale-[1.02]";
+                                        } else if (isPremium) {
+                                            // Estilo Chamativo para Premium Bloqueado
+                                            cardStyles += "bg-gradient-to-br from-white/5 to-purple-500/10 border-white/10 hover:border-purple-500/50 hover:shadow-[0_0_25px_rgba(168,85,247,0.15)]";
+                                        } else if (isPro) {
+                                            // Estilo Chamativo para Pro Bloqueado
+                                            cardStyles += "bg-gradient-to-br from-white/5 to-emerald-500/10 border-white/10 hover:border-emerald-500/50 hover:shadow-[0_0_25px_rgba(16,185,129,0.15)]";
+                                        } else {
+                                            // Tema Normal Disponível
+                                            cardStyles += "bg-white/5 border-white/10 hover:border-blue-500/50 hover:bg-white/[0.08]";
+                                        }
 
-                        {loading ? (
-                            <div className="flex flex-col items-center justify-center py-20 text-blue-400 font-mono text-sm animate-pulse">
-                                CONNECTING_TO_NODES...
-                            </div>
-                        ) : (
-                            <div className="space-y-10">
-                                {categories.map((category) => (
-                                    <div key={category} className="space-y-4">
-                                        <h3 className="text-sm font-mono tracking-widest text-white/50 uppercase">
-                                            {category}
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                            {themes
-                                                .filter((t) => t.category === category)
-                                                .map((theme) => {
-                                                    const isLocked = theme.minPlan !== "lite";
-                                                    const isSelected = selectedThemes.includes(theme.id);
+                                        return (
+                                            <div
+                                                key={theme.id}
+                                                onClick={() => toggleTheme(theme.id, theme.minPlan)}
+                                                className={cardStyles}
+                                            >
+                                                {/* Glow Traseiro para itens ativos */}
+                                                {isSelected && <div className="absolute -inset-1 bg-blue-500/20 blur-xl"></div>}
 
-                                                    // Define estilos baseados no plano e estado
-                                                    let cardStyle = "bg-white/5 border-white/5 text-white/60 hover:bg-white/10 cursor-pointer";
-                                                    if (isSelected) cardStyle = "bg-blue-500/20 border-blue-400/50 text-white shadow-[0_0_20px_rgba(59,130,246,0.2)]";
-                                                    if (isLocked) {
-                                                        cardStyle = theme.minPlan === "premium"
-                                                            ? "bg-purple-900/10 border-purple-500/20 text-purple-400/50 cursor-not-allowed opacity-70"
-                                                            : "bg-emerald-900/10 border-emerald-500/20 text-emerald-400/50 cursor-not-allowed opacity-70";
-                                                    }
-
-                                                    return (
-                                                        <button
-                                                            key={theme.id}
-                                                            onClick={() => toggleTheme(theme.id, theme.minPlan)}
-                                                            className={`text-left px-4 py-3 rounded-xl transition-all border flex flex-col gap-1 relative overflow-hidden group ${cardStyle}`}
-                                                        >
-                                                            <div className="flex justify-between items-start w-full gap-2">
-                                                                <span className={`text-sm font-medium ${isLocked ? 'group-hover:blur-[2px] transition-all' : ''}`}>
-                                                                    {theme.title}
-                                                                </span>
-                                                                {isLocked && <span className="text-xs">🔒</span>}
-                                                                {isSelected && <span className="text-blue-400 text-xs">✔</span>}
-                                                            </div>
-                                                            <span className="text-[10px] opacity-60 line-clamp-1">
-                                                                {theme.description}
-                                                            </span>
-
-                                                            {/* Overlay de Upsell que aparece ao passar o rato (Hover) num item bloqueado */}
-                                                            {isLocked && (
-                                                                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                                                    <span className="text-[10px] font-bold tracking-widest uppercase">
-                                                                        Requer Plano {theme.minPlan}
-                                                                    </span>
+                                                <div className="relative z-10 flex flex-col h-full justify-between">
+                                                    <div>
+                                                        <div className="flex justify-between items-start mb-3 gap-2">
+                                                            <h4 className="text-base font-medium tracking-tight text-white leading-tight">
+                                                                {theme.title}
+                                                            </h4>
+                                                            
+                                                            {/* SELO DE BLOQUEIO / CADEADO CHAMATIVO */}
+                                                            {isLocked ? (
+                                                                <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md border text-[9px] font-bold uppercase tracking-wider shrink-0 ${isPremium ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'}`}>
+                                                                    <span>🔒</span> {theme.minPlan}
                                                                 </div>
-                                                            )}
-                                                        </button>
-                                                    );
-                                                })}
-                                        </div>
-                                    </div>
-                                ))}
+                                                            ) : isSelected ? (
+                                                                <span className="text-blue-400 animate-pulse shrink-0">●</span>
+                                                            ) : null}
+                                                        </div>
+                                                        <p className="text-xs text-white/60 leading-relaxed line-clamp-2">
+                                                            {theme.description}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        )}
-                    </div>
+                        ))
+                    )}
                 </section>
 
                 {/* ========================= */}
-                {/* 💳 CHECKOUT INFORMATIVO */}
+                {/* 💳 SIDEBAR DE CONVERSÃO (CHECKOUT) */}
                 {/* ========================= */}
-                <aside className="space-y-6 reveal-on-scroll delay-200 lg:sticky lg:top-32 h-fit">
-
-                    {/* CARD EXPLICATIVO DE ENTREGA */}
-                    <div className="glass p-6 rounded-3xl border border-blue-500/20 space-y-4">
-                        <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-2xl">
-                            📱
-                        </div>
-                        <h3 className="text-lg font-medium text-blue-400">Como você recebe?</h3>
-                        <p className="text-sm text-white/60 leading-relaxed">
-                            Assim que o pagamento for confirmado, nossos agentes iniciam a varredura.
+                <aside className="lg:sticky lg:top-32 h-fit space-y-8">
+                    
+                    {/* CARD ENTREGA (WHATSAPP) */}
+                    <div className="glass p-8 rounded-[2.5rem] border border-blue-500/30 bg-blue-500/5 relative overflow-hidden">
+                        <div className="absolute -right-4 -top-4 text-6xl opacity-10">📱</div>
+                        <h3 className="text-xl font-medium text-blue-400 mb-4">Entrega via WhatsApp</h3>
+                        <p className="text-sm text-white/70 leading-relaxed mb-6">
+                            Nossos agentes processam os dados e entregam relatórios semanais diretamente no seu dispositivo, com segurança militar.
                         </p>
-                        <div className="space-y-3 pt-2">
-                            <div className="flex gap-3 items-start">
-                                <span className="text-blue-400">✔</span>
-                                <p className="text-xs text-white/70">Relatórios semanais via WhatsApp.</p>
-                            </div>
-                            <div className="flex gap-3 items-start">
-                                <span className="text-blue-400">✔</span>
-                                <p className="text-xs text-white/70">Acesso à área restrita no site Martinez.</p>
-                            </div>
-                            <div className="flex gap-3 items-start">
-                                <span className="text-blue-400">✔</span>
-                                <p className="text-xs text-white/70">Criptografia de ponta a ponta na entrega.</p>
-                            </div>
-                        </div>
+                        <ul className="space-y-4">
+                            {["Relatórios em PDF Criptografado", "Alertas Diários no Site", "Suporte Prioritário"].map((item, i) => (
+                                <li key={i} className="flex items-center gap-3 text-xs font-medium text-white/80">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
 
-                    {/* CARD DE PREÇO / BOTÃO */}
-                    <div className="glass p-8 rounded-[2rem] border border-white/10 flex flex-col items-center text-center">
-                        <span className="text-[10px] font-mono tracking-widest text-white/40 mb-2 uppercase">Assinatura Mensal</span>
-                        <div className="text-4xl font-light mb-6">$33,00</div>
-
-                        <button
+                    {/* CARD DE PREÇO FINAL */}
+                    <div className="glass p-10 rounded-[3rem] border border-white/10 flex flex-col items-center text-center shadow-2xl">
+                        <span className="text-[10px] font-mono tracking-[0.3em] text-white/30 mb-4 uppercase">Valor do Acesso</span>
+                        <div className="flex items-start gap-1 mb-8">
+                            <span className="text-xl mt-2 text-white/40">$</span>
+                            <span className="text-6xl font-light tracking-tighter">33,00</span>
+                        </div>
+                        
+                        <button 
                             disabled={selectedThemes.length < 3}
                             className={`
-                                w-full py-4 rounded-2xl font-medium transition-all
-                                ${selectedThemes.length === 3
-                                    ? "bg-white text-black hover:scale-[1.02] shadow-xl cursor-pointer"
-                                    : "bg-white/5 text-white/20 cursor-not-allowed"}
+                                w-full py-5 rounded-2xl font-bold text-sm uppercase tracking-widest transition-all duration-500
+                                ${selectedThemes.length === 3 
+                                    ? "bg-blue-500 text-white hover:bg-blue-400 shadow-[0_0_40px_rgba(59,130,246,0.4)] scale-105 cursor-pointer" 
+                                    : "bg-white/5 text-white/20 border border-white/5 cursor-not-allowed"}
                             `}
                         >
-                            {selectedThemes.length === 3 ? "Finalizar Assinatura" : "Selecione 3 temas"}
+                            {selectedThemes.length === 3 ? "Confirmar Assinatura" : "Selecione 3 Temas"}
                         </button>
-
-                        <p className="text-[10px] text-white/30 mt-4">
-                            Cancele a qualquer momento. Pagamento via PIX ou Crypto.
-                        </p>
+                        
+                        <div className="mt-6 flex flex-col gap-2">
+                            <p className="text-[10px] text-white/30 uppercase tracking-widest">Pagamento Seguro</p>
+                            <div className="flex gap-4 opacity-30 grayscale justify-center">
+                                <span className="text-xs">PIX</span>
+                                <span className="text-xs">BTC</span>
+                                <span className="text-xs">USDT</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <Link href="/#planos" className="block text-center text-xs text-white/40 hover:text-white transition">
-                        ← Voltar para todos os planos
+                    <Link href="/#planos" className="block text-center text-[10px] font-bold tracking-widest text-white/20 hover:text-blue-400 transition-colors uppercase">
+                        ← Ver Outras Opções
                     </Link>
 
                 </aside>
