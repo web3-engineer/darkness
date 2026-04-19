@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { 
-  Play, 
-  Lock, 
-  ChevronLeft, 
-  Database, 
-  ShieldCheck, 
+import {
+  Play,
+  Lock,
+  ChevronLeft,
+  Database,
+  ShieldCheck,
   Clock,
   FileText
 } from "lucide-react";
@@ -16,9 +16,9 @@ import {
 const CHAPTERS = [
   {
     id: 1,
-    title: "O Berço dos Mistérios: A Antiguidade",
-    desc: "A origem das sociedades secretas e os cultos iniciáticos do Egito e Grécia Antiga.",
-    duration: "14:20",
+    title: "Um aviso para os donos do mundo: Serpentine Franchaise",
+    desc: "Conheça seus inimigos.",
+    duration: "13:00",
     locked: false,
     href: "/canal/video1", // O link para a página do vídeo
   },
@@ -48,7 +48,7 @@ const CHAPTERS = [
 export default function ChannelOverviewPage() {
   return (
     <div className="min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-blue-500/30 pb-20 relative overflow-hidden">
-      
+
       {/* ========================= */}
       {/* BACKGROUND & GLOW EFFECTS */}
       {/* ========================= */}
@@ -59,8 +59,8 @@ export default function ChannelOverviewPage() {
       {/* NAVBAR SIMPLES (BREADCRUMB)*/}
       {/* ========================= */}
       <nav className="w-full p-6 lg:px-12 flex items-center justify-between relative z-10">
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
         >
           <div className="p-2 bg-white/5 border border-white/10 rounded-full group-hover:bg-white/10 transition-colors">
@@ -79,23 +79,23 @@ export default function ChannelOverviewPage() {
       {/* CONTEÚDO PRINCIPAL        */}
       {/* ========================= */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 mt-6">
-        
+
         {/* HERO SECTION (CAPA DO DOSSIÊ) */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-full rounded-[2.5rem] bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] p-8 md:p-12 relative overflow-hidden mb-12"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none" />
-          
+
           <div className="flex flex-col md:flex-row gap-8 lg:gap-12 relative z-10">
             {/* Imagem/Cover Abstrata do Dossiê */}
             <div className="w-full md:w-1/3 aspect-[3/4] bg-black rounded-3xl border border-white/10 overflow-hidden relative shadow-2xl shrink-0 group">
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10" />
-              <img 
-                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" 
-                alt="Capa Dossiê" 
+              <img
+                src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop"
+                alt="Capa Dossiê"
                 className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute bottom-6 left-6 z-20">
@@ -114,26 +114,23 @@ export default function ChannelOverviewPage() {
                   <Database className="w-3 h-3" /> 4 Capítulos
                 </span>
               </div>
-              
+
               <h1 className="text-3xl md:text-5xl font-serif font-bold text-white leading-tight mb-4">
-                O Velo das Sombras: <br/> Uma Genealogia do Poder Oculto
+                Os donos do mundo: <br /> Serpentine Franchaise
               </h1>
-              
+
               <p className="text-sm md:text-base text-slate-400 leading-relaxed mb-8 max-w-2xl">
-                A história oficial é uma mentira sobre a qual se entrou em acordo. Explore as raízes 
-                das sociedades secretas, desde os cultos iniciáticos da antiguidade até os algoritmos 
-                de manipulação contemporâneos. Uma jornada documental para além da superfície da rede.
+                A história oficial é uma mentira sobre a qual se entrou em acordo. Saiba tudo. Mas acredite se quiser.
               </p>
 
               <div className="flex items-center gap-4">
-                {/* CORREÇÃO 1 AQUI: Usando o fallback || "#" */}
                 <Link href={CHAPTERS[0].href || "#"}>
                   <button className="flex items-center gap-3 px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-blue-400 transition-all hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:-translate-y-1 active:scale-95">
                     <Play className="w-4 h-4 fill-black" />
-                    Iniciar Descriptografia
+                    Iniciar Estudo
                   </button>
                 </Link>
-                
+
                 <div className="hidden sm:flex flex-col">
                   <span className="text-[10px] text-slate-500 uppercase tracking-widest font-mono font-bold">Progresso</span>
                   <span className="text-sm text-white font-bold">0% Concluído</span>
@@ -149,7 +146,7 @@ export default function ChannelOverviewPage() {
         <div className="space-y-6">
           <div className="flex items-center gap-3 mb-8 px-2">
             <FileText className="w-5 h-5 text-blue-400" />
-            <h2 className="text-xl font-bold text-white tracking-tight">Índice de Arquivos</h2>
+            <h2 className="text-xl font-bold text-white tracking-tight">Capítulos</h2>
             <div className="h-[1px] flex-1 bg-gradient-to-r from-blue-900/50 to-transparent ml-4" />
           </div>
 
@@ -160,11 +157,10 @@ export default function ChannelOverviewPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${
-                  chapter.locked 
-                    ? "bg-slate-900/20 border-white/5 opacity-60" 
+                className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${chapter.locked
+                    ? "bg-slate-900/20 border-white/5 opacity-60"
                     : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-blue-500/50 cursor-pointer group"
-                }`}
+                  }`}
               >
                 {/* O envoltório para navegação (se não estiver trancado) */}
                 {chapter.locked ? (
@@ -192,11 +188,10 @@ function ChapterContent({ chapter }: { chapter: any }) {
   return (
     <>
       {/* Indicador Numérico / Ícone */}
-      <div className={`w-14 h-14 rounded-full flex items-center justify-center shrink-0 border shadow-inner ${
-        chapter.locked 
-          ? "bg-black/50 border-white/5 text-slate-600" 
+      <div className={`w-14 h-14 rounded-full flex items-center justify-center shrink-0 border shadow-inner ${chapter.locked
+          ? "bg-black/50 border-white/5 text-slate-600"
           : "bg-blue-500/10 border-blue-500/30 text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors"
-      }`}>
+        }`}>
         {chapter.locked ? (
           <Lock className="w-5 h-5" />
         ) : (
