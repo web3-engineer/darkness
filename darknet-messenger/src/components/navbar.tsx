@@ -10,22 +10,22 @@ export default function Navbar({ onNavigate }: Props) {
       <nav className="glass px-6 py-3 rounded-2xl flex items-center gap-8 shadow-lg">
 
         <span className="relative w-10 h-6 flex items-center shrink-0">
-          <img src="/logo.png" className="absolute -left-9 h-20 max-w-none" />
+          <img src="/images/logo.png" className="absolute -left-9 h-20 max-w-none" />
         </span>
 
         <div className="flex gap-6 text-sm text-white/80">
 
           {/* ✅ prioridade correta */}
-          <button onClick={() => onNavigate("Como funciona")} className="hover:text-white">
-            Como funciona
+          <button onClick={() => onNavigate("Como Funciona")} className="hover:text-white">
+            Como Funciona
           </button>
 
-          <button onClick={() => onNavigate("Canais da Darknet")} className="hover:text-white">
-            Canais Ativos
+          <button onClick={() => onNavigate("Canal Dark")} className="hover:text-white">
+            Canal Dark
           </button>
 
-          <button onClick={() => onNavigate("Frequências Privadas")} className="hover:text-white">
-            Frequências Privadas
+          <button onClick={() => onNavigate("Frequências")} className="hover:text-white">
+            Frequências
           </button>
 
         </div>

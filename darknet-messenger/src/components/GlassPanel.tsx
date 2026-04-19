@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ComoFunciona from "@/src/sections/ComoFunciona";
-import Canais from "@/src/sections/Canais";
 import Frequencias from "@/src/sections/Frequencias";
+import Canal from "../sections/Canal";
 
 type Props = {
     isOpen: boolean;
@@ -83,11 +83,10 @@ export default function GlassPanel({
     // 🧠 render dinâmico
     const renderContent = () => {
         switch (content) {
-            case "Canais da Darknet":
-                return <Canais />;
-            case "Frequências Privadas":
+            case "Frequências":
                 return <Frequencias />;
-            case "Como funciona":
+            case "Canal Dark":
+                return <Canal/>;
             default:
                 return <ComoFunciona />;
         }
